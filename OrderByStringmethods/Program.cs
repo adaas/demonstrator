@@ -5,22 +5,27 @@ using System.Text;
 
 namespace OrderByStringmethods
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            var query = from m in typeof(string).GetMethods()
-                        where m.IsStatic == true
-                        orderby m.Name
-                        
-                      
-                        select new { m.Name  };
+            IEnumerable<string> query = AllMethods();
 
             foreach (var item in query)
             {
                 Console.WriteLine(item);
             }
 
+        }
+
+        public static IEnumerable<string> AllMethods()
+        {
+            IEnumerable<string> query = from m in typeof(string).GetMethods()
+                                        where m.IsStatic == true
+                                        orderby m.Name
+
+                                       select m.Name;
+            return query;
         }
     }
 }
